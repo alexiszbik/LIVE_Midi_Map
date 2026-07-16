@@ -67,7 +67,21 @@ Stereo multi-effect (bit crusher, ping-pong delay, frequency shifter, HPF).
 
 ## Channel 6
 
-*No assignments yet.*
+### Midi to CV
+
+MIDI to CV module
+
+| Message | Number | Effect |
+|---|---|---|
+| CC | 31 | CC to CV control |
+
+### Synth Bass FX
+
+Mono multi-effect (bit crusher, frequency shifter, HPF).
+
+| Message | Number | Effect |
+|---|---|---|
+| CC | 80 | Global Mute: value > 60 = muted, value <= 60 = unmuted (smooth fade) |
 
 ---
 
