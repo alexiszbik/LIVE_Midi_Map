@@ -67,17 +67,19 @@ Stereo multi-effect (bit crusher, ping-pong delay, frequency shifter, HPF).
 
 ## Channel 6
 
-### Midi to CV
+### MIDI2CVR4
 
-MIDI to CV module
+Arduino Nano R4 MIDI to CV module — pitch, gate, and CC outputs. [GitHub repository](https://github.com/alexiszbik/midi2cvr4).
 
 | Message | Number | Effect |
 |---|---|---|
-| CC | 31 | CC to CV control |
+| Note On | C2–C7 (36–96) | Pitch CV (1 V/oct, 0–5 V) + Gate high |
+| Note Off | — | Gate low |
+| CC | 31 | CC CV output (0–10 V, scaled from CC value 0–127) |
 
 ### Synth Bass FX
 
-Mono multi-effect (bit crusher, frequency shifter, HPF).
+Mono multi-effect (bit crusher, frequency shifter, HPF). [GitHub repository](https://github.com/alexiszbik/multifx2).
 
 | Message | Number | Effect |
 |---|---|---|
