@@ -96,7 +96,7 @@ Mono multi-effect (HPF, bit crusher, frequency shifter, stutter gate, input mete
 
 ### VocoderSynth
 
-Carrier synth for vocoder pedal.
+Carrier synth for vocoder pedal. [GitHub repository](https://github.com/alexiszbik/VocoderSynth).
 
 | Message | Number | Effect |
 |---|---|---|
