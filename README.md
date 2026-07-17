@@ -94,7 +94,20 @@ Mono multi-effect (HPF, bit crusher, frequency shifter, stutter gate, input mete
 
 ## Channel 7
 
-*No assignments yet.*
+### VocoderSynth
+
+Carrier synth for vocoder pedal.
+
+| Message | Number | Effect |
+|---|---|---|
+| Note On | — | Triggers a voice (mono: retrigger / last-note priority; poly: up to 4 voices) |
+| Note Off | — | Releases the matching note |
+| CC | 10 | **Play Mode**: 0 = Mono, 127 = Poly (linear 0–1) |
+| CC | 11 | **Glide**: 0–127 (linear 0–1, glide time = glide² × sample rate) |
+| CC | 12 | **Release**: 0–127 → 5 ms–8 s (pow³ curve) |
+
+**Fixed envelope** (not CC-mapped): Attack 0.02 s, Decay 0.02 s, Sustain 1.0.
+
 
 ---
 
