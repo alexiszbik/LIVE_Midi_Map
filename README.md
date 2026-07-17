@@ -77,13 +77,18 @@ Arduino Nano R4 MIDI to CV module — pitch, gate, and CC outputs. [GitHub repos
 | Note Off | — | Gate low |
 | CC | 31 | CC CV output (0–10 V, scaled from CC value 0–127) |
 
-### Synth Bass FX
+### Synth Bass FX (MultiFX2)
 
-Mono multi-effect (bit crusher, frequency shifter, HPF). [GitHub repository](https://github.com/alexiszbik/multifx2).
+Mono multi-effect (HPF, bit crusher, frequency shifter, stutter gate, input metering). [GitHub repository](https://github.com/alexiszbik/multifx2).
 
 | Message | Number | Effect |
 |---|---|---|
-| CC | 80 | Global Mute: value > 60 = muted, value <= 60 = unmuted (smooth fade) |
+| CC | 10 | HPF cutoff |
+| CC | 11 | HPF resonance |
+| CC | 12 | Bit crusher rate |
+| CC | 13 | Frequency shifter frequency |
+| CC | 14 | Frequency shifter dry/wet |
+| CC | 80 | Global mute: value > 60 = muted, value <= 60 = unmuted (smooth fade) |
 
 ---
 
