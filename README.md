@@ -79,22 +79,77 @@ Arduino Nano R4 MIDI to CV module — pitch, gate, and CC outputs. [GitHub repos
 
 ### Synth Bass FX (MultiFX2)
 
-Mono multi-effect (HPF, bit crusher, frequency shifter, stutter gate, input metering). [GitHub repository](https://github.com/alexiszbik/multifx2).
+Mono multi-effect (HPF, bit crusher, frequency shifter, reverb send, input metering). [GitHub repository](https://github.com/alexiszbik/multifx2).
 
 | Message | Number | Effect |
 |---|---|---|
-| CC | 10 | HPF cutoff |
-| CC | 11 | HPF resonance |
-| CC | 12 | Bit crusher rate |
-| CC | 13 | Frequency shifter frequency |
-| CC | 14 | Frequency shifter dry/wet |
+| CC | 10 | HPF cutoff (0–127 → parameter 0–1) |
+| CC | 11 | HPF resonance (0–127 → parameter 0–1) |
+| CC | 12 | Bit crusher rate (0–127 → parameter 0–1) |
+| CC | 13 | Frequency shifter amount / direction (0–127 → parameter 0–1) |
+| CC | 14 | Frequency shifter dry/wet (0–127 → parameter 0–1) |
+| CC | 15 | Stutter depth (0–127 → parameter 0–1, `pow³` curve in firmware) |
+| CC | 16 | Reverb send (0–127 → parameter 0–1, `value²` curve in firmware) |
 | CC | 80 | Global mute: value > 60 = muted, value <= 60 = unmuted (smooth fade) |
+| Note On | 0 (C-1) | Stutter gate open (velocity > 0) — drives MIDI LED; stutter FX bypassed in current firmware |
+| Note Off | 0 (C-1) | Stutter gate closed |
+
+**Hardware knobs (mirror CC 10–16):**
+
+| Pin | Control |
+|-----|---------|
+| D15 | HPF cutoff |
+| D21 | HPF resonance |
+| D17 | Bit crusher rate |
+| D19 | Frequency shifter amount / direction |
+| D18 | Frequency shifter dry/wet |
+| D22 | Stutter depth |
+| D16 | Reverb send |
+
+**Notes:**
+- CC values 10–16 are scaled to `0.0–1.0` in firmware (`value / 127`).
+- Reverb is a parallel send (200 Hz HPF on send, LFO-modulated room size, ~8 s tail).
+- Mute switch on hardware pin D11 mirrors CC 80 mute state.
 
 ---
 
 ## Channel 7
 
-*No assignments yet.*
+### VocoderSynth
+
+Two-oscillator synth for driving a vocoder pedal. [GitHub repository](https://github.com/alexiszbik/VocoderSynth).
+
+| Message | Number | Effect |
+|---|---|---|
+| Note On / Note Off | — | Trigger voices (poly: up to 4 voices) |
+| CC | 10 | Play Mode: 0 = Mono, 127 = Poly |
+| CC | 11 | Glide (0–127 → parameter 0–1, squared in seconds) |
+| CC | 12 | Release (0–127 → parameter 0–1, `pow³` curve mapped to 0.005–8 s) |
+| CC | 13 | Osc mix: balance osc A / osc B (0 = osc B, 127 = osc A, sqrt dry/wet) |
+| CC | 14 | Osc A waveform: 0–63 = saw, 64–127 = square |
+| CC | 15 | Osc B waveform: 0–63 = saw, 64–127 = square |
+| CC | 16 | Osc A pulse width: duty cycle in square mode (0–127 → 0–1, 64 = 50 %) |
+| CC | 17 | Osc B pulse width: duty cycle in square mode (0–127 → 0–1, 64 = 50 %) |
+
+**Hardware knobs (mirror CC 11–12):**
+
+| Pin | Control |
+|-----|---------|
+| 15 | Glide |
+| 16 | Release |
+
+**Hardware button (mirrors CC 10):**
+
+| Pin | Control |
+|-----|---------|
+| 7 | Poly mode toggle |
+
+**Notes:**
+- CC values 10–17 are scaled to `0.0–1.0` in firmware (`value / 127`).
+- Osc A plays at pitch; osc B plays one octave below.
+- Osc mix, waveforms, and pulse width (CC 13–17) are MIDI-only — no front-panel control.
+- Pulse width only affects an oscillator when it is in square mode (CC 14 / 15 ≥ 64).
+- Defaults at boot: osc A square, osc B saw, osc mix 0.7, pulse width 50 %, mono mode.
 
 ---
 
