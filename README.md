@@ -197,7 +197,37 @@ Two-oscillator synth for driving a vocoder pedal. [GitHub repository](https://gi
 
 ## Channel 15
 
-*No assignments yet.*
+### MIDI LED Strip Controller (megaLedStrips)
+
+Arduino Mega — controls 4 RGB LED strips (12 PWM outputs). [GitHub repository](https://github.com/alexiszbik/MIDI-LED-Strip-Controller).
+
+| Message | Number | Effect |
+|---|---|---|
+| Note On / Note Off | 58 | Rainbow mode toggle (on while held, returns to Normal on release; clears colors on release) |
+| Note On / Note Off | 59 | Explode mode toggle (on while held, returns to Normal on release; clears colors on release) |
+| Note On / Note Off | 60 | All strips — RED (velocity controls brightness) |
+| Note On / Note Off | 61 | All strips — GREEN |
+| Note On / Note Off | 62 | All strips — BLUE |
+| Note On / Note Off | 63 | All strips — WHITE (R+G+B simultaneously) |
+| Note On / Note Off | 64–66 | Strip 1 — RED / GREEN / BLUE |
+| Note On / Note Off | 67 | Strip 1 — WHITE (R+G+B simultaneously) |
+| Note On / Note Off | 68–70 | Strip 2 — RED / GREEN / BLUE |
+| Note On / Note Off | 71 | Strip 2 — WHITE |
+| Note On / Note Off | 72–74 | Strip 3 — RED / GREEN / BLUE |
+| Note On / Note Off | 75 | Strip 3 — WHITE |
+| Note On / Note Off | 76–78 | Strip 4 — RED / GREEN / BLUE |
+| Note On / Note Off | 79 | Strip 4 — WHITE |
+| CC | 3 | Decay time: 0–127 → 1 ms – ~3001 ms (`1 + (value/127)² × 3000`) |
+| CC | 4 | Rainbow speed: hue step interval in ms (`1 + value`) |
+| CC | 5 | Explode level — reserved (handler present, no effect in current firmware) |
+| CC | 6 | CC mode: value > 60 = manual CC override (notes ignored), value ≤ 60 = note mode |
+| CC | 7 | Global brightness in CC mode: 0–127 → PWM level (`(value/127)² × 255`, 0–1 = off) |
+
+**Notes:**
+- Note velocity is scaled in firmware: `velocity ≤ 1 → 0`, else `velocity × 2 + 1` (max 255).
+- In Normal mode, colors decay after note off according to CC 3.
+- In CC mode, all LEDs (R+G+B on every strip) share the same level from CC 7; switching CC mode clears all outputs.
+- Rainbow mode cycles hue across all strips; Explode mode randomly flashes one strip in white every ~40 ms.
 
 ---
 
